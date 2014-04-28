@@ -2,6 +2,16 @@
 from os.path import exists
 import re
 vowel_pattern = re.compile('[aeiou]')
+
+def free_vowels(word):
+    key = ''
+    for char in word:
+        # replace all vowels with free character '_'
+        if vowel_pattern.match(char):
+            char = '_'
+        key += char
+    return key
+
 def create_key(word):
     def remove_duplicate_letters(word):
         out = ''
@@ -11,15 +21,6 @@ def create_key(word):
         # append last character
         out += word[-1]
         return out    
-
-    def free_vowels(word):
-        key = ''
-        for char in word:
-            # replace all vowels with free character '_'
-            if vowel_pattern.match(char):
-                char = '_'
-            key += char
-        return key
 
     return free_vowels(remove_duplicate_letters(word))
 
@@ -54,18 +55,32 @@ def seed_dict():
 
         return dictionary
 
-def is_valid_spellcheck(raw, potential):
-    if len(raw) < len(potential):
-        return False
-    return True
-    # for i in range(len(potential)):
-    #     if potential[i]
-
 def give_suggestion(user_input):
     key = create_key(user_input)
     if dictionary.get(key):
         potential = dictionary[key][0]
-        if is_valid_spellcheck(user_input, potential):
+
+        def is_valid_spellcheck(raw, potential):
+            # conect should produce connect as suggestion
+            raw = free_vowels(raw)
+            potential = free_vowels(potential)
+            i = 0
+            j = 0
+            while i < len(potential)-1:
+                print i, j
+                if potential[i] == raw[j]:
+                    i += 1
+                    j += 1
+                    continue
+                # the characters don't match; check for duplication in raw
+                while raw[j] == raw[j-1]:
+                    j += 1
+                # if at this point there is still no match, the suggesion is invalid
+                if potential[i] != raw[j]:
+                    return False
+            return True
+
+        if is_valid_spellcheck(free_vowels(user_input), potential):
             return potential
     return "NO SUGGESTION"
 
