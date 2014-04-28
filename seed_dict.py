@@ -2,6 +2,8 @@
 from os.path import exists
 import re
 vowel_pattern = re.compile('[aeiou]')
+# seed_dictionary_path = '/usr/share/dict/words'
+seed_dictionary_path = 'toydict.txt'
 
 def free_vowels(word):
     key = ''
@@ -13,7 +15,7 @@ def free_vowels(word):
     return key
 
 def create_key(word):
-    def remove_duplicate_letters(word):
+    def remove_consecutive_duplicate_characters(word):
         out = ''
         for i in range(len(word) - 1):
             if word[i] != word[i+1]:
@@ -22,11 +24,11 @@ def create_key(word):
         out += word[-1]
         return out    
 
-    return free_vowels(remove_duplicate_letters(word))
+    return remove_consecutive_duplicate_characters(free_vowels(word))
 
 def seed_dict():
     # script, input_file = argv
-    input_file = "toydict.txt"
+    input_file = seed_dictionary_path
     isValid = True
 
     if not exists(input_file):
@@ -59,11 +61,11 @@ def give_suggestion(user_input):
     key = create_key(user_input)
     if dictionary.get(key):
         potential = dictionary[key][0]
-
+        # conect should produce connect as suggestion
         def is_valid_spellcheck(raw, potential):
-            # conect should produce connect as suggestion
             raw = free_vowels(raw)
             potential = free_vowels(potential)
+            print raw, potential
             i = 0
             j = 0
             while i < len(potential)-1:
