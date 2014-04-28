@@ -17,6 +17,15 @@ if isValid:
     in_file_ended = False
     dictionary = {}
 
+    def remove_duplicate_letters(s):
+        out = ''
+        for i in range(len(s) - 1):
+            if s[i] != s[i+1]:
+                out += s[i]
+        # append last character
+        out += s[-1]
+        return out        
+
     while not in_file_ended:
         word = in_file.readline()
         if word == '':
@@ -26,7 +35,9 @@ if isValid:
         # create key
         key = ''
         print 'making key'
+        word = remove_duplicate_letters(word)
         for char in word:
+            # replace all vowels with free character '?'
             if vowel_pattern.match(char):
                 char = '?'
             key += char
