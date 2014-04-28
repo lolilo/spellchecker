@@ -25,7 +25,6 @@ if isValid:
         # append last character
         out += word[-1]
         return out        
-
     def free_vowels(word):
         key = ''
         for char in word:
@@ -34,18 +33,26 @@ if isValid:
                 char = '_'
             key += char
         return key
+    def create_key(word):
+        return free_vowels(remove_duplicate_letters(word))
 
+    def add_key_to_dictionary(key, value):
+        if dictionary.get(key):
+            dictionary[key].append(value)
+        else:
+            dictionary[key] = [value]
 
     while not in_file_ended:
-        word = in_file.readline()
+        word = in_file.readline().strip()
         if word == '':
             in_file_ended = True
             break
 
-        # create key
-        word = remove_duplicate_letters(word)
-        key = free_vowels(word)
+        key = create_key(word)
         print key
+        print word
+        add_key_to_dictionary(key, word)
 
+    print dictionary
 
 
