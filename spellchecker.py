@@ -46,6 +46,12 @@ def seed_dict():
             else:
                 dictionary[key] = [value]
 
+        # account for correct raw input -- simply return the same string
+        def add_correctly_spelled_word_as_key(value):
+            if dictionary.get(value):
+                pass
+            dictionary[value] = [value]
+
         while not in_file_ended:
             word = in_file.readline().strip()
             if word == '':
@@ -54,10 +60,13 @@ def seed_dict():
 
             key = create_key(word)
             add_to_dictionary(key, word)
+            add_correctly_spelled_word_as_key(word)
 
         return dictionary
 
 def give_suggestion(user_input):
+    if dictionary.get(user_input):
+        return dictionary[user_input][0]
     key = create_key(user_input)
     if dictionary.get(key):
         potential = dictionary[key][0]
@@ -65,11 +74,11 @@ def give_suggestion(user_input):
         def is_valid_spellcheck(raw, potential):
             raw = free_vowels(raw)
             potential = free_vowels(potential)
-            print raw, potential
+            # print raw, potential
             i = 0
             j = 0
             while i < len(potential)-1:
-                print i, j
+                # print i, j
                 if potential[i] == raw[j]:
                     i += 1
                     j += 1
