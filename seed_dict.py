@@ -4,7 +4,6 @@ import re
 
 script, input_file = argv
 isValid = True
-
 vowel_pattern = re.compile('[aeiou]')
 
 if not exists(input_file):
@@ -24,12 +23,13 @@ if isValid:
             in_file_ended = True
             break
 
-    # create key
-    key = ''
-    for char in word:
-        if vowel_pattern.match(char):
-            char = '?'
-        key += char
-    print key    
+        # create key
+        key = ''
+        print 'making key'
+        for char in word:
+            if vowel_pattern.match(char):
+                char = '?'
+            key += char
+        print key    
 
 
