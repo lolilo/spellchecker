@@ -16,27 +16,27 @@ if isValid:
     # Is cursor at the end of the file? 
     in_file_ended = False
     dictionary = {}
-
-    def remove_duplicate_letters(word):
-        out = ''
-        for i in range(len(word) - 1):
-            if word[i] != word[i+1]:
-                out += word[i]
-        # append last character
-        out += word[-1]
-        return out        
-    def free_vowels(word):
-        key = ''
-        for char in word:
-            # replace all vowels with free character '_'
-            if vowel_pattern.match(char):
-                char = '_'
-            key += char
-        return key
     def create_key(word):
-        return free_vowels(remove_duplicate_letters(word))
+        def remove_duplicate_letters(word):
+            out = ''
+            for i in range(len(word) - 1):
+                if word[i] != word[i+1]:
+                    out += word[i]
+            # append last character
+            out += word[-1]
+            return out    
 
-    def add_key_to_dictionary(key, value):
+        def free_vowels(word):
+            key = ''
+            for char in word:
+                # replace all vowels with free character '_'
+                if vowel_pattern.match(char):
+                    char = '_'
+                key += char
+            return key
+
+        return free_vowels(remove_duplicate_letters(word))
+    def add_to_dictionary(key, value):
         if dictionary.get(key):
             dictionary[key].append(value)
         else:
@@ -49,9 +49,7 @@ if isValid:
             break
 
         key = create_key(word)
-        print key
-        print word
-        add_key_to_dictionary(key, word)
+        add_to_dictionary(key, word)
 
     print dictionary
 
