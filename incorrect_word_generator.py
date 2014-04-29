@@ -1,7 +1,8 @@
 from os.path import exists
 from sys import argv
 import random
-seed_dictionary_path = 'toydict.txt'
+seed_dictionary_path = '/usr/share/dict/words'
+# seed_dictionary_path = 'toydict.txt'
 vowels = ['a', 'e', 'i', 'o', 'u']
 
 script, output_file = argv
@@ -55,7 +56,7 @@ if isValid:
     for word in words:
         misspelled_word = generate_mistake(word)
         target.write(misspelled_word + '\n')
-        print misspelled_word
+        # print misspelled_word
     print 'Complete.'
     target.close()
 

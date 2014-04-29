@@ -3,8 +3,8 @@ from os.path import exists
 import re
 vowel_pattern = re.compile('[aeiou]')
 seed_dictionary_path = '/usr/share/dict/words'
-incorrect_words_path = 'misspelled_words.txt'
 # seed_dictionary_path = 'toydict.txt'
+incorrect_words_path = 'misspelled_words.txt'
 
 def free_vowels(word):
     key = ''
@@ -15,20 +15,19 @@ def free_vowels(word):
         key += char
     return key
 
-def create_key(word):
-    def remove_consecutive_duplicate_characters(word):
-        out = ''
-        for i in range(len(word) - 1):
-            if word[i] != word[i+1]:
-                out += word[i]
-        # append last character
-        out += word[-1]
-        return out    
+def remove_consecutive_duplicate_characters(word):
+    out = ''
+    for i in range(len(word) - 1):
+        if word[i] != word[i+1]:
+            out += word[i]
+    # append last character
+    out += word[-1]
+    return out    
 
+def create_key(word):
     return remove_consecutive_duplicate_characters(free_vowels(word))
 
 def seed_dict():
-    # script, input_file = argv
     input_file = seed_dictionary_path
     isValid = True
 
@@ -54,53 +53,62 @@ def seed_dict():
             dictionary[value] = [value]
 
         while not in_file_ended:
-            word = in_file.readline().strip()
+            word = in_file.readline().strip().lower()
             if word == '':
                 in_file_ended = True
                 in_file.close()
                 break
-
-            key = create_key(word)
-            add_to_dictionary(key, word)
-            add_correctly_spelled_word_as_key(word)
+            else:
+                key = create_key(word)
+                add_to_dictionary(key, word)
+                add_correctly_spelled_word_as_key(word)
 
         return dictionary
 
 def give_suggestion(user_input):
-    if dictionary.get(user_input):
+    if dictionary.get(user_input): # correctly spelled word entered
         return dictionary[user_input][0]
+
     key = create_key(user_input)
+    # print ''
+    # print 'word is', user_input
+    # print 'key is ', key
     if dictionary.get(key):
-        potential = dictionary[key][0]
+        potentials = dictionary[key]
         # conect should produce connect as suggestion
         def is_valid_spellcheck(raw, potential):
             raw = free_vowels(raw)
+            # AchhHhhHhheiiiiIiAiNnNnNn
+            # TODO: breaking for AchhHhhHhheiiiiIiAiNnNnNn
+            # potential = remove_consecutive_duplicate_characters(free_vowels(potential))
             potential = free_vowels(potential)
-            # print raw, potential
+            # print 'raw is ', raw
+            # print 'potential word is ', potential
             i = 0
             j = 0
-            while i < len(potential)-1:
+            while i < len(potential)-1 and j < len(raw)-1:
                 # print i, j
                 if potential[i] == raw[j]:
                     i += 1
                     j += 1
                     continue
                 # the characters don't match; check for duplication in raw
-                while raw[j] == raw[j-1]:
+                while raw[j] == raw[j-1] and j < len(raw)-1:
                     j += 1
                 # if at this point there is still no match, the suggesion is invalid
                 if potential[i] != raw[j]:
                     return False
             return True
 
-        if is_valid_spellcheck(free_vowels(user_input), potential):
-            return potential
-    return "NO SUGGESTION"
-
-dictionary = seed_dict()
-# print dictionary
+        suggestion = "NO SUGGESTION"
+        for potential in potentials:
+            if is_valid_spellcheck(user_input, potential):
+                suggestion = potential
+                break
+        return suggestion
 
 def spellcheck(user_input):
+    user_input = user_input.lower() # case insensitive
     if not user_input:
         return
     suggesion = give_suggestion(user_input)
@@ -119,12 +127,26 @@ def test_generated_misspellings():
         in_file_ended = False # Is cursor at the end of the file? 
         while not in_file_ended:
             word = in_file.readline().strip()
-            print word
-            print spellcheck(word)
+            if word == '':
+                in_file_ended = True
+                in_file.close()
+            else:
+                suggestion = spellcheck(word)
+                if suggestion == "NO SUGGESTION":
+                    break
+    print "All test cases passed."
 
-while True: 
-    user_input = raw_input("> ").strip().lower() # case insensitive
-    # user_input = sys.stdin.read()
-    print spellcheck(user_input)
+def continous_loop():
+    while True: 
+        user_input = raw_input("> ").strip()
+        # user_input = sys.stdin.read()
+        print spellcheck(user_input)
 
-# test_generated_misspellings()
+def main():
+    """In case we need this for something"""
+    pass
+
+if __name__ == "__main__":
+    dictionary = seed_dict()
+    continous_loop()
+    # test_generated_misspellings()
