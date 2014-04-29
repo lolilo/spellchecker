@@ -4,7 +4,6 @@ spellchecker
 An English dictionary is [seeded](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L30) by the following [rules](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L27), 
 
 Keys -- 
-
 1. [all lower-case](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L56)
 2. [adjacent duplicated letters removed](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L18)
 3. [vowels replaced with '_'](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L9)
