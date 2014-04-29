@@ -3,7 +3,7 @@ Spellchecker
 
 Overview
 ------------------
-To run on your machine, choose either a full dictionary or a toy dictionary in [spellchecker.py](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L5) and [incorrect_word_generator.py](https://github.com/lolilo/spellchecker/blob/master/incorrect_word_generator.py#L4). 
+To run on your machine, choose either a full dictionary or a toy dictionary in [spellchecker.py](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L4) and [incorrect_word_generator.py](https://github.com/lolilo/spellchecker/blob/master/incorrect_word_generator.py#L4). 
 
 An English dictionary is [seeded](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L30) by the following [rules](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L27), 
 
