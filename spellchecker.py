@@ -14,15 +14,6 @@ def free_vowels(word):
         key += char
     return key
 
-def remove_consecutive_duplicate_non_vowel_characters(word):
-    out = ''
-    for i in range(len(word) - 1):
-        if word[i] != word[i+1] or VOWEL_PATTERN.match(word[i]): #Aachen
-            out += word[i]
-    # append last character
-    out += word[-1]
-    return out    
-
 def remove_consecutive_duplicate_characters(word):
     out = ''
     for i in range(len(word) - 1):
@@ -32,12 +23,22 @@ def remove_consecutive_duplicate_characters(word):
     out += word[-1]
     return out    
 
-def create_key_for_seeding_dict(word):
-    key = free_vowels(remove_consecutive_duplicate_non_vowel_characters(word.lower()))
-    return key
+# def remove_consecutive_duplicate_non_vowel_characters(word):
+#     out = ''
+#     for i in range(len(word) - 1):
+#         if word[i] != word[i+1] or VOWEL_PATTERN.match(word[i]): 
+#             out += word[i]
+#     # append last character
+#     out += word[-1]
+#     return out  
 
-def create_key_for_user_input(word):
-    key = free_vowels(remove_consecutive_duplicate_characters(word.lower()))
+# def create_key_for_seed_dict(word): # Aachen -> _ch_n
+#     key = free_vowels(remove_consecutive_duplicate_non_vowel_characters(word.lower()))
+#     return key
+
+def create_key(word): # Aachen -> _ch_n
+    # key = free_vowels(remove_consecutive_duplicate_characters(word.lower()))
+    key = remove_consecutive_duplicate_characters(free_vowels(word.lower()))
     return key
 
 def seed_dict():
@@ -72,7 +73,7 @@ def seed_dict():
                 in_file.close()
                 break
             else:
-                key = create_key_for_seeding_dict(word)
+                key = create_key(word)
                 add_to_dictionary(key, word)
                 # add_correctly_spelled_word_as_key(word)
 
@@ -87,7 +88,7 @@ def spellcheck(user_input):
         if dictionary.get(user_input): # correctly spelled word entered
             return dictionary[user_input][0] # this will be a single element list
 
-        key = create_key_for_user_input(user_input)
+        key = create_key(user_input)
         suggestion = "NO SUGGESTION"
         # print ''
         # print 'word is', user_input
