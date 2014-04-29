@@ -67,23 +67,26 @@ def seed_dict():
 
 def give_suggestion(user_input):
     if dictionary.get(user_input): # correctly spelled word entered
-        return dictionary[user_input][0]
+        return dictionary[user_input][0] # this will be a single element list
 
     key = create_key(user_input)
-    print ''
-    print 'word is', user_input
-    print 'key is ', key
+    suggestion = "NO SUGGESTION"
+    # print ''
+    # print 'word is', user_input
+    # print 'key is ', key
     if dictionary.get(key):
         potentials = dictionary[key]
-        print potentials
+        # print 'key maps to value', potentials
         # 'conect' should NOT produce 'connect' as suggestion
         def is_valid_spellcheck(raw, potential):
+            if len(raw) < len(potential):
+                return False
             raw = free_vowels(raw)
             # AchhHhhHhheiiiiIiAiNnNnNn
             # TODO: breaking for AchhHhhHhheiiiiIiAiNnNnNn
             potential = free_vowels(potential)
-            print 'user_input with free vowels is ', raw
-            print 'potential word is ', potential
+            # print 'user_input with free vowels is ', raw
+            # print 'potential word with free vowels is ', potential
             i = 0
             j = 0
             while i < len(potential)-1 and j < len(raw)-1:
@@ -99,13 +102,12 @@ def give_suggestion(user_input):
                 if potential[i] != raw[j]:
                     return False
             return True
-
-        suggestion = "NO SUGGESTION"
+    
         for potential in potentials:
             if is_valid_spellcheck(user_input, potential):
                 suggestion = potential
                 break
-        return suggestion
+    return suggestion
 
 def spellcheck(user_input):
     user_input = user_input.lower() # case insensitive
@@ -133,6 +135,7 @@ def test_generated_misspellings():
             else:
                 suggestion = spellcheck(word)
                 if suggestion == "NO SUGGESTION":
+                    print "%s has no suggested correction." % word
                     break
     print "All test cases passed."
 
