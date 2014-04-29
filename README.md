@@ -1,7 +1,7 @@
 Spellchecker
 ============
 
-Spellchecker Design
+Overview
 ------------------
 To run on your machine, choose either a full dictionary or a toy dictionary in [spellchecker.py](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L5) and [incorrect_word_generator.py](https://github.com/lolilo/spellchecker/blob/master/incorrect_word_generator.py#L4). 
 
