@@ -51,4 +51,4 @@ Time Complexity
 ------------------
 To spellcheck a raw input string of length m, we first change each character to lowercase with Python's string.lower method, which is around O(m). There is then another pass to remove duplicate characters and then change vowels to '_', each of which is O(m). There is probably a way to reduce this O(3*m) to O(m), which I may look into in the future. Once we have our transformed input string, lookup to the dictionary is on average O(1). Checking the validity of a suggested word is again some constant time. 
 
-Overall, the time complexity is O(k*m), where k > 0. This aligns with the restriction of this program being faster than O(n) per word checked, where n is the length of the dictionary.
+Overall, the time complexity is O(k*m), where k > 0 and m is the length of the input string. This aligns with the restriction of this program being faster than O(n) per word checked, where n is the length of the dictionary.
