@@ -19,7 +19,7 @@ Keys
 
 To account for user input that is already spelled correctly, we also populate the dictionary with [correctly spelled words as both key and value in their respective key-value pairs](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L52).
 
-When spellchecking the input 'AchhHhhHhheiiiiIiAiNnNnNn', we [transform this input](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L71) into the key _ch_n with the same functions used in populating our dictionary. The key _ch_n maps to ['aachen', 'achaean']. However, according to our rules, 'aachen' will be a false match for 'AchhHhhHhheiiiiIiAiNnNnNn'. We must [check the validity of the returned value against the raw user input](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L79) before displaying the suggestion to the user. We loop through the list of potential suggestions and return a suggestion that passes our validity check. If we exhaust the list (or if the key created from the user's input does not map to any values), we return ["NO SUGGESTION"](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L102). 
+When spellchecking the input 'AchhHhhHhheiiiiIiAiNnNnNn', we [transform this input](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L71) into the key _ch_n with the same functions used in populating our dictionary. The key _ch_n maps to ['aachen', 'achaean']. However, according to our rules, 'aachen' will be a false match for 'AchhHhhHhheiiiiIiAiNnNnNn'. We must [check the validity of the returned value against the raw user input](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L80) before displaying the suggestion to the user. We loop through the list of potential suggestions and return a suggestion that passes our validity check. If we exhaust the list (or if the key created from the user's input does not map to any values), we return ["NO SUGGESTION"](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L72). 
 
     word is achhhhhhhheiiiiiiainnnnnn
     key is  _ch_n
@@ -41,7 +41,7 @@ Another example, 'conect' should not produce a suggestion according to our rules
 
 Test Cases
 ------------------
-incorrect_word_generator.py produces misspellings of words in our dictionary in order for us to test the integrity of spellchecker.py. We can pipe the output from the word generator to the spellchecker program with the correct [main function](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L165) selected in spellchecker.py.
+incorrect_word_generator.py produces misspellings of words in our dictionary in order for us to test the integrity of spellchecker.py. We can pipe the output from the word generator to the spellchecker program with the correct [main function](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L164) selected in spellchecker.py.
     
     $ python incorrect_word_generator.py | python spellchecker.py
 
