@@ -1,7 +1,7 @@
 from os.path import exists
 import re, sys
 VOWEL_PATTERN = re.compile('[aeiou]')
-SEED_DICTIONARY_PATH = '/usr/share/dict/words'
+# SEED_DICTIONARY_PATH = '/usr/share/dict/words'
 SEED_DICTIONARY_PATH = 'toydict.txt'
 INCORRECT_WORDS_PATH = 'misspelled_words.txt'
 
@@ -158,11 +158,11 @@ def continuous_loop():
         print spellcheck(user_input)
 
 def main():
-    continuous_loop()
+    # continuous_loop()
     # test_generated_misspellings()
-    # test_piped_input()
+    test_piped_input()
 
 if __name__ == "__main__":
     dictionary = seed_dict()
-    print dictionary
+    # print dictionary
     main()

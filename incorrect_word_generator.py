@@ -1,8 +1,8 @@
 from os.path import exists
 from sys import argv
 import random
-SEED_DICTIONARY_PATH = '/usr/share/dict/words'
-# SEED_DICTIONARY_PATH = 'toydict.txt'
+# SEED_DICTIONARY_PATH = '/usr/share/dict/words'
+SEED_DICTIONARY_PATH = 'toydict.txt'
 VOWEL_LIST = ['a', 'e', 'i', 'o', 'u']
 
 # returns True if path to dictionary exists
