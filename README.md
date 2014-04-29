@@ -45,7 +45,7 @@ incorrect_word_generator.py produces misspellings of words in our dictionary in 
     
     $ python incorrect_word_generator.py | python spellchecker.py
 
-The [program will stop if it meets an input that does not produce a suggestion](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L138). If all test cases pass, a [success message displays](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L140).
+The [program will stop if it meets an input that does not produce a suggestion](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L147). If all test cases pass, a [success message displays](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L149).
 
 Time Complexity
 ------------------
