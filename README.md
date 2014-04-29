@@ -24,7 +24,7 @@ When spellchecking the input 'AchhHhhHhheiiiiIiAiNnNnNn', we [transform this inp
     potential word with free vowels is  __ch_n -- this does not pass our validity checker
     user_input with free vowels is  _chhhhhhhh_________nnnnnn
     potential word with free vowels is  _ch___n
-    For _ch_n, spellchecker produces 'achaean' and not 'aachen'.
+    For _ch_n, spellchecker produces 'achaean' and not 'aachen'
 
 Another example, conect should not produce a suggestion according to our rules. 
 
