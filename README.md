@@ -1,6 +1,8 @@
-spellchecker
+Spellchecker
 ============
 
+Spellchecker Design
+------------------
 To run on your machine, choose either a full dictionary or a toy dictionary in [spellchecker.py](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L5) and [incorrect_word_generator.py](https://github.com/lolilo/spellchecker/blob/master/incorrect_word_generator.py#L4). 
 
 An English dictionary is [seeded](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L30) by the following [rules](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L27), 
@@ -35,6 +37,11 @@ Another example, conect should not produce a suggestion according to our rules.
     potential word with free vowels is c_nn_ct
     c_n_ct does not have the minimum number of 'n' characters, so the spellchecker produces NO SUGGESTION
 
+Test Cases
+------------------
 incorrect_word_generator.py produces misspellings of words in our dictionary in order for us to test the integrity of spellchecker.py. We can pipe the output from the word generator to the spellchecker program with the correct [main function](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L165) selected in spellchecker.py.
     
     $ python incorrect_word_generator.py | python spellchecker.py
+
+Time Complexity
+------------------
