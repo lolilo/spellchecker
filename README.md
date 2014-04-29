@@ -30,7 +30,7 @@ When spellchecking the input 'AchhHhhHhheiiiiIiAiNnNnNn', we [transform this inp
     potential word with free vowels is  _ch___n
     For _ch_n, spellchecker produces 'achaean' and not 'aachen'
 
-Another example, 'conect' should not produce a suggestion according to our rules. 
+Another example, 'conect', should not produce a suggestion according to our rules. 
 
     word is conect
     key is  c_n_ct
