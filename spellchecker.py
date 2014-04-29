@@ -1,15 +1,15 @@
 from os.path import exists
 import re, sys
-vowel_pattern = re.compile('[aeiou]')
-# seed_dictionary_path = '/usr/share/dict/words'
-seed_dictionary_path = 'toydict.txt'
-incorrect_words_path = 'misspelled_words.txt'
+VOWEL_PATTERN = re.compile('[aeiou]')
+SEED_DICTIONARY_PATH = '/usr/share/dict/words'
+SEED_DICTIONARY_PATH = 'toydict.txt'
+INCORRECT_WORDS_PATH = 'misspelled_words.txt'
 
 def free_vowels(word):
     key = ''
     for char in word:
         # replace all vowels with free character '_'
-        if vowel_pattern.match(char):
+        if VOWEL_PATTERN.match(char):
             char = '_'
         key += char
     return key
@@ -24,10 +24,11 @@ def remove_consecutive_duplicate_characters(word):
     return out    
 
 def create_key(word):
-    return remove_consecutive_duplicate_characters(free_vowels(word))
+    key = free_vowels(remove_consecutive_duplicate_characters(word.lower()))
+    return key
 
 def seed_dict():
-    input_file = seed_dictionary_path
+    input_file = SEED_DICTIONARY_PATH
     isValid = True
 
     if not exists(input_file):
@@ -52,7 +53,7 @@ def seed_dict():
             dictionary[value] = [value]
 
         while not in_file_ended:
-            word = in_file.readline().strip().lower()
+            word = in_file.readline().strip()
             if word == '':
                 in_file_ended = True
                 in_file.close()
@@ -60,7 +61,7 @@ def seed_dict():
             else:
                 key = create_key(word)
                 add_to_dictionary(key, word)
-                add_correctly_spelled_word_as_key(word)
+                # add_correctly_spelled_word_as_key(word)
 
         return dictionary
 
@@ -80,9 +81,7 @@ def give_suggestion(user_input):
         def is_valid_spellcheck(raw, potential):
             if len(raw) < len(potential):
                 return False
-            raw = free_vowels(raw)
-            # AchhHhhHhheiiiiIiAiNnNnNn
-            # TODO: breaking for AchhHhhHhheiiiiIiAiNnNnNn
+            raw = free_vowels(raw.lower())
             potential = free_vowels(potential)
             # print 'user_input with free vowels is ', raw
             # print 'potential word with free vowels is ', potential
@@ -109,7 +108,6 @@ def give_suggestion(user_input):
     return suggestion
 
 def spellcheck(user_input):
-    user_input = user_input.lower() # case insensitive
     if not user_input:
         return
     suggesion = give_suggestion(user_input)
@@ -117,7 +115,7 @@ def spellcheck(user_input):
 
 # test from a .txt file of misspelled words
 def test_generated_misspellings():
-    input_file = incorrect_words_path
+    input_file = INCORRECT_WORDS_PATH
     isValid = True
 
     if not exists(input_file):
@@ -154,11 +152,10 @@ def continuous_loop():
         print spellcheck(user_input)
 
 def main():
-    """In case we need this for something"""
-    pass
+    continuous_loop()
+    # test_generated_misspellings()
+    # test_piped_input()
 
 if __name__ == "__main__":
     dictionary = seed_dict()
-    # continuous_loop()
-    # test_generated_misspellings()
-    test_piped_input()
+    main()
