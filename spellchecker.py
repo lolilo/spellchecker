@@ -2,13 +2,13 @@ from os.path import exists
 import re, sys
 VOWEL_PATTERN = re.compile('[aeiou]')
 SEED_DICTIONARY_PATH = '/usr/share/dict/words'
-SEED_DICTIONARY_PATH = 'toydict.txt'
+# SEED_DICTIONARY_PATH = 'toydict.txt'
 INCORRECT_WORDS_PATH = 'misspelled_words.txt'
 
+# replace all vowels in word with wildcard character '_'
 def free_vowels(word):
     key = ''
     for char in word:
-        # replace all vowels with free character '_'
         if VOWEL_PATTERN.match(char):
             char = '_'
         key += char
@@ -23,20 +23,8 @@ def remove_consecutive_duplicate_characters(word):
     out += word[-1]
     return out    
 
-# def remove_consecutive_duplicate_non_vowel_characters(word):
-#     out = ''
-#     for i in range(len(word) - 1):
-#         if word[i] != word[i+1] or VOWEL_PATTERN.match(word[i]): 
-#             out += word[i]
-#     # append last character
-#     out += word[-1]
-#     return out  
-
-# def create_key_for_seed_dict(word): # Aachen -> _ch_n
-#     key = free_vowels(remove_consecutive_duplicate_non_vowel_characters(word.lower()))
-#     return key
-
-def create_key(word): # Aachen -> _ch_n
+# create keys: Aachen -> _ch_n
+def create_key(word): 
     # key = free_vowels(remove_consecutive_duplicate_characters(word.lower()))
     key = remove_consecutive_duplicate_characters(free_vowels(word.lower()))
     return key
@@ -153,6 +141,7 @@ def test_generated_misspellings():
                     return
     print "All test cases passed."
 
+# test via piping: $ python incorrect_word_generator.py | python spellchecker.py
 def test_piped_input():
     lines = sys.stdin.read().split()
     for word in lines:
@@ -162,6 +151,7 @@ def test_piped_input():
             return
     print "All test cases passed."
 
+# test from raw user input on console
 def continuous_loop():
     while True: 
         user_input = raw_input("> ").strip()
@@ -174,5 +164,5 @@ def main():
 
 if __name__ == "__main__":
     dictionary = seed_dict()
-    print dictionary
+    # print dictionary
     main()

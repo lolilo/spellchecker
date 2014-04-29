@@ -1,10 +1,11 @@
 from os.path import exists
 from sys import argv
 import random
-# SEED_DICTIONARY_PATH = '/usr/share/dict/words'
-SEED_DICTIONARY_PATH = 'toydict.txt'
+SEED_DICTIONARY_PATH = '/usr/share/dict/words'
+# SEED_DICTIONARY_PATH = 'toydict.txt'
 VOWEL_LIST = ['a', 'e', 'i', 'o', 'u']
 
+# returns True if path to dictionary exists
 def seed_dictionary_exists(path):
     if not exists(path):
         print "%r does not exist!" % SEED_DICTIONARY_PATH
@@ -16,6 +17,7 @@ def create_word_list(input_file):
     words = open(input_file).read().splitlines()
     return words
 
+# generates a mispelling of word
 def generate_mistake(word):
 
     def randomize_vowel(char):
@@ -28,13 +30,7 @@ def generate_mistake(word):
         if make_capital:
             return char.upper()
         return char
-    # def random_duplication(word):
-    #     word_with_duplicated_chars = ''
-    #     for i in range(len(word)):
-    #         char = word[i]
-    #         duplication_amount = random.randint(1, 6) # duplicate some random amount between one and six, inclusive
-    #         out += char * duplication_amount
-    #     return word_with_duplicated_chars
+
     def random_duplication(char):
         duplication_amount = random.randint(1, 6) # duplicate some random amount between one and six, inclusive
         return char * duplication_amount
@@ -59,6 +55,8 @@ def generate_txt_file_of_misspelled_words():
         print 'Complete.'
         target.close()
 
+# print misepelled words to console for testing via piping
+# $ python incorrect_word_generator.py | python spellchecker.py 
 def print_mispelled_words():
     if seed_dictionary_exists(SEED_DICTIONARY_PATH):
         words = create_word_list(SEED_DICTIONARY_PATH)
