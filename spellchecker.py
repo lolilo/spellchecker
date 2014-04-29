@@ -56,6 +56,7 @@ def seed_dict():
             word = in_file.readline().strip()
             if word == '':
                 in_file_ended = True
+                in_file.close()
                 break
 
             key = create_key(word)
