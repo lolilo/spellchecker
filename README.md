@@ -33,3 +33,4 @@ Another example, conect should not produce a suggestion according to our rules.
     potential word with free vowels is c_nn_ct
     c_n_ct does not have the minimum number of 'n' characters, so the spellchecker produces NO SUGGESTION
 
+incorrect_word_generator.py produces misspellings of words in our dictionary in order for us to test the integrity of spellchecker.py.
