@@ -136,7 +136,7 @@ def test_generated_misspellings():
                     break
     print "All test cases passed."
 
-def continous_loop():
+def continuous_loop():
     while True: 
         user_input = raw_input("> ").strip()
         # user_input = sys.stdin.read()
@@ -148,5 +148,5 @@ def main():
 
 if __name__ == "__main__":
     dictionary = seed_dict()
-    continous_loop()
+    continuous_loop()
     # test_generated_misspellings()
