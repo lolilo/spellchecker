@@ -55,6 +55,7 @@ if isValid:
     for word in words:
         misspelled_word = generate_mistake(word)
         target.write(misspelled_word + '\n')
+        print misspelled_word
     print 'Complete.'
     target.close()
 
