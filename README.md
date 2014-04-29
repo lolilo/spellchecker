@@ -5,21 +5,21 @@ Overview
 ------------------
 To run on your machine, choose either a full dictionary or a toy dictionary in [spellchecker.py](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L4) and [incorrect_word_generator.py](https://github.com/lolilo/spellchecker/blob/master/incorrect_word_generator.py#L4). 
 
-An English dictionary is [seeded](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L30) by the following [rules](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L27), 
+An English dictionary is [seeded](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L29) by the following [rules](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L27), 
 
 Keys
 
-* [all lower-case](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L56)
-* [adjacent duplicated letters removed](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L18)
+* [all lower-case](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L55)
+* [adjacent duplicated letters removed](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L17)
 * [vowels replaced with '_', an arbitrary wildcard character](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L8)
 
-[Values](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L43) are directly mapped from raw strings taken from seed file. For example, the words 'Aachen' and 'Achaean' will both produce the key '_ch_n'. The key value pair will then be 
+[Values](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L42) are directly mapped from raw strings taken from seed file. For example, the words 'Aachen' and 'Achaean' will both produce the key '_ch_n'. The key value pair will then be 
 
     '_ch_n' : ['aachen', 'achaean']
 
 To account for user input that is already spelled correctly, we also populate the dictionary with [correctly spelled words as both key and value in their respective key-value pairs](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L52).
 
-When spellchecking the input 'AchhHhhHhheiiiiIiAiNnNnNn', we [transform this input](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L72) into the key _ch_n with the same functions used in populating our dictionary. The key _ch_n maps to ['aachen', 'achaean']. However, according to our rules, 'aachen' will be a false match for 'AchhHhhHhheiiiiIiAiNnNnNn'. We must [check the validity of the returned value against the raw user input](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L80) before displaying the suggestion to the user. We loop through the list of potential suggestions and return a suggestion that passes our validity check. If we exhaust the list (or if the key created from the user's input does not map to any values), we return ["NO SUGGESTION"](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L103). 
+When spellchecking the input 'AchhHhhHhheiiiiIiAiNnNnNn', we [transform this input](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L71) into the key _ch_n with the same functions used in populating our dictionary. The key _ch_n maps to ['aachen', 'achaean']. However, according to our rules, 'aachen' will be a false match for 'AchhHhhHhheiiiiIiAiNnNnNn'. We must [check the validity of the returned value against the raw user input](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L79) before displaying the suggestion to the user. We loop through the list of potential suggestions and return a suggestion that passes our validity check. If we exhaust the list (or if the key created from the user's input does not map to any values), we return ["NO SUGGESTION"](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L102). 
 
     word is achhhhhhhheiiiiiiainnnnnn
     key is  _ch_n
