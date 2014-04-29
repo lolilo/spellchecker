@@ -45,3 +45,4 @@ incorrect_word_generator.py produces misspellings of words in our dictionary in 
 
 Time Complexity
 ------------------
+To spellcheck a raw input of length m, we first change each character to lowercase with Python's string.lower method, which is probably about O(m). There is then another pass to remove duplicate characters and then change vowels to '_', each of which is O(m). There is probably a way to reduce this O(3*m) to O(m), but for the time limitation for this project, I am not too concerned. Lookup to the dictionary is about O(1). Overall, the time complexity is O(k*m), where k is nonzero constant. This aligns with the restriction of this program being faster than O(n) per word checked, where n is the length of the dictionary.
