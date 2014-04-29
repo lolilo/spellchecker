@@ -13,7 +13,9 @@ Keys
 * [adjacent duplicated letters removed](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L18)
 * [vowels replaced with '_'](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L9)
 
-[Values](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L43) are directly mapped from raw strings taken from seed file. For example, the words 'Aachen' and 'Achaean' will both produce the key '_ch_n'. The key value pair will then be '_ch_n' : ['aachen', 'achaean'].
+[Values](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L43) are directly mapped from raw strings taken from seed file. For example, the words 'Aachen' and 'Achaean' will both produce the key '_ch_n'. The key value pair will then be 
+
+    '_ch_n' : ['aachen', 'achaean']
 
 To account for user input that is already spelled correctly, we also populate the dictionary with [correctly spelled words as idential keys and values](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L50).
 
