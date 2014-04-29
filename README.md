@@ -23,7 +23,7 @@ When spellchecking the input 'AchhHhhHhheiiiiIiAiNnNnNn', we [transform this inp
 
     word is achhhhhhhheiiiiiiainnnnnn
     key is  _ch_n
-    key maps to value ['aachen', 'achaean']
+    key maps to value ['Aachen', 'Achaean']
     user_input with free vowels is  _chhhhhhhh_________nnnnnn
     potential word with free vowels is  __ch_n -- this does not pass our validity checker
     user_input with free vowels is  _chhhhhhhh_________nnnnnn
