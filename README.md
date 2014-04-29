@@ -17,7 +17,7 @@ Keys
 
     '_ch_n' : ['aachen', 'achaean']
 
-To account for user input that is already spelled correctly, we also populate the dictionary with [correctly spelled words as both key and value in their respective key-value pairs](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L50).
+To account for user input that is already spelled correctly, we also populate the dictionary with [correctly spelled words as both key and value in their respective key-value pairs](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L52).
 
 When spellchecking the input 'AchhHhhHhheiiiiIiAiNnNnNn', we [transform this input](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L72) into the key _ch_n with the same functions used in populating our dictionary. The key _ch_n maps to ['aachen', 'achaean']. However, according to our rules, 'aachen' will be a false match for 'AchhHhhHhheiiiiIiAiNnNnNn'. We must [check the validity of the returned value](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L80) before displaying the suggestion to the user. We loop through the list of potential suggestions and return a suggestion that passes our validity check. If we exhaust the list (or if the key created from the user's input does not map to any values), we return ["NO SUGGESTION"](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L103). 
 
