@@ -70,20 +70,20 @@ def give_suggestion(user_input):
         return dictionary[user_input][0]
 
     key = create_key(user_input)
-    # print ''
-    # print 'word is', user_input
-    # print 'key is ', key
+    print ''
+    print 'word is', user_input
+    print 'key is ', key
     if dictionary.get(key):
         potentials = dictionary[key]
-        # conect should produce connect as suggestion
+        print potentials
+        # 'conect' should NOT produce 'connect' as suggestion
         def is_valid_spellcheck(raw, potential):
             raw = free_vowels(raw)
             # AchhHhhHhheiiiiIiAiNnNnNn
             # TODO: breaking for AchhHhhHhheiiiiIiAiNnNnNn
-            # potential = remove_consecutive_duplicate_characters(free_vowels(potential))
             potential = free_vowels(potential)
-            # print 'raw is ', raw
-            # print 'potential word is ', potential
+            print 'user_input with free vowels is ', raw
+            print 'potential word is ', potential
             i = 0
             j = 0
             while i < len(potential)-1 and j < len(raw)-1:
