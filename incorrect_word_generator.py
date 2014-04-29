@@ -1,62 +1,75 @@
 from os.path import exists
-# from sys import argv
+from sys import argv
 import random
-# seed_dictionary_path = '/usr/share/dict/words'
-seed_dictionary_path = 'toydict.txt'
-vowels = ['a', 'e', 'i', 'o', 'u']
+# SEED_DICTIONARY_PATH = '/usr/share/dict/words'
+SEED_DICTIONARY_PATH = 'toydict.txt'
+VOWEL_LIST = ['a', 'e', 'i', 'o', 'u']
 
-# script, output_file = argv
-isValid = True
-if not exists(seed_dictionary_path):
-    print "%r does not exist!" % seed_dictionary_path
-    isValid = False
+def seed_dictionary_exists(path):
+    if not exists(path):
+        print "%r does not exist!" % SEED_DICTIONARY_PATH
+        return False
+    return True
 
-if isValid:
-    # print "Writing list of misspelled words to %s." % output_file
-    # target = open(output_file, 'w')
-    # target.truncate()
+# create list of all words from input file
+def create_word_list(input_file):
+    words = open(input_file).read().splitlines()
+    return words
 
-    def create_word_list():
-        input_file = seed_dictionary_path
-        # create list of all words
-        words = open(input_file).read().splitlines()
-        return words
+def generate_mistake(word):
 
-    def select_random_word(word_list):
-        random_word = random.choice(word_list)
-        return random_word
+    def randomize_vowel(char):
+        if char in VOWEL_LIST:
+            return random.choice(VOWEL_LIST)
+        return char
 
-    def generate_mistake(word):
-        mispelled_word = ''
-        for i in range(len(word)):
-            char = word[i]
-            if char in vowels:
-                random_vowel = random.choice(vowels)
-                char = random_vowel
-            duplication_amount = random.randint(1, 6) # duplicate some random amount between one and six, inclusive
-            mispelled_word += char * duplication_amount
-        out = ''
+    def randomize_capitalization(char):
+        make_capital = random.choice([True, False])
+        if make_capital:
+            return char.upper()
+        return char
+    # def random_duplication(word):
+    #     word_with_duplicated_chars = ''
+    #     for i in range(len(word)):
+    #         char = word[i]
+    #         duplication_amount = random.randint(1, 6) # duplicate some random amount between one and six, inclusive
+    #         out += char * duplication_amount
+    #     return word_with_duplicated_chars
+    def random_duplication(char):
+        duplication_amount = random.randint(1, 6) # duplicate some random amount between one and six, inclusive
+        return char * duplication_amount
+            
+    misspelled_word = ''
+    for char in word:
+        misspelled_word += random_duplication(randomize_capitalization(randomize_vowel(char)))
+    return misspelled_word
 
-        for i in range(len(mispelled_word)):
-            char = mispelled_word[i]
-            # random vowels
-            if char in vowels:
-                random_vowel = random.choice(vowels)
-                char = random_vowel
-            # random capitalization
-            make_capital = random.choice([True, False])
-            if make_capital:
-                out += char.upper()
-            out += mispelled_word[i]
-        return out
+def generate_txt_file_of_misspelled_words():
+    script, output_file = argv
+    if seed_dictionary_exists(SEED_DICTIONARY_PATH):
+        print "Writing list of misspelled words to %s." % output_file
+        target = open(output_file, 'w')
+        target.truncate()
 
-    words = create_word_list()
-    word = select_random_word(words)
+        words = create_word_list(SEED_DICTIONARY_PATH)
 
-    for word in words:
-        misspelled_word = generate_mistake(word)
-        # target.write(misspelled_word + '\n')
-        print misspelled_word
-    # print 'Complete.'
-    # target.close()
+        for word in words:
+            misspelled_word = generate_mistake(word)
+            target.write(misspelled_word + '\n')
+        print 'Complete.'
+        target.close()
 
+def print_mispelled_words():
+    if seed_dictionary_exists(SEED_DICTIONARY_PATH):
+        words = create_word_list(SEED_DICTIONARY_PATH)
+
+        for word in words:
+            misspelled_word = generate_mistake(word)
+            print misspelled_word
+
+def main():
+    # generate_txt_file_of_misspelled_words()
+    print_mispelled_words()
+
+if __name__ == "__main__":
+    main()

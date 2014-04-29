@@ -14,16 +14,29 @@ def free_vowels(word):
         key += char
     return key
 
-def remove_consecutive_duplicate_characters(word):
+def remove_consecutive_duplicate_non_vowel_characters(word):
     out = ''
     for i in range(len(word) - 1):
-        if word[i] != word[i+1]:
+        if word[i] != word[i+1] or VOWEL_PATTERN.match(word[i]): #Aachen
             out += word[i]
     # append last character
     out += word[-1]
     return out    
 
-def create_key(word):
+def remove_consecutive_duplicate_characters(word):
+    out = ''
+    for i in range(len(word) - 1):
+        if word[i] != word[i+1]: 
+            out += word[i]
+    # append last character
+    out += word[-1]
+    return out    
+
+def create_key_for_seeding_dict(word):
+    key = free_vowels(remove_consecutive_duplicate_non_vowel_characters(word.lower()))
+    return key
+
+def create_key_for_user_input(word):
     key = free_vowels(remove_consecutive_duplicate_characters(word.lower()))
     return key
 
@@ -59,57 +72,59 @@ def seed_dict():
                 in_file.close()
                 break
             else:
-                key = create_key(word)
+                key = create_key_for_seeding_dict(word)
                 add_to_dictionary(key, word)
                 # add_correctly_spelled_word_as_key(word)
 
         return dictionary
 
-def give_suggestion(user_input):
-    if dictionary.get(user_input): # correctly spelled word entered
-        return dictionary[user_input][0] # this will be a single element list
-
-    key = create_key(user_input)
-    suggestion = "NO SUGGESTION"
-    # print ''
-    # print 'word is', user_input
-    # print 'key is ', key
-    if dictionary.get(key):
-        potentials = dictionary[key]
-        # print 'key maps to value', potentials
-        # 'conect' should NOT produce 'connect' as suggestion
-        def is_valid_spellcheck(raw, potential):
-            if len(raw) < len(potential):
-                return False
-            raw = free_vowels(raw.lower())
-            potential = free_vowels(potential)
-            # print 'user_input with free vowels is ', raw
-            # print 'potential word with free vowels is ', potential
-            i = 0
-            j = 0
-            while i < len(potential)-1 and j < len(raw)-1:
-                # print i, j
-                if potential[i] == raw[j]:
-                    i += 1
-                    j += 1
-                    continue
-                # the characters don't match; check for duplication in raw
-                while raw[j] == raw[j-1] and j < len(raw)-1:
-                    j += 1
-                # if at this point there is still no match, the suggesion is invalid
-                if potential[i] != raw[j]:
-                    return False
-            return True
-    
-        for potential in potentials:
-            if is_valid_spellcheck(user_input, potential):
-                suggestion = potential
-                break
-    return suggestion
-
+# provide a correctly spelled word for user input
 def spellcheck(user_input):
     if not user_input:
         return
+
+    def give_suggestion(user_input):
+        if dictionary.get(user_input): # correctly spelled word entered
+            return dictionary[user_input][0] # this will be a single element list
+
+        key = create_key_for_user_input(user_input)
+        suggestion = "NO SUGGESTION"
+        # print ''
+        # print 'word is', user_input
+        # print 'key is ', key
+        if dictionary.get(key):
+            potentials = dictionary[key]
+            # print 'key maps to value', potentials
+            # 'conect' should NOT produce 'connect' as suggestion
+            def is_valid_spellcheck(raw, potential):
+                if len(raw) < len(potential):
+                    return False
+                raw = free_vowels(raw.lower())
+                potential = free_vowels(potential.lower())
+                # print 'user_input with free vowels is ', raw
+                # print 'potential word with free vowels is ', potential
+                i = 0
+                j = 0
+                while i < len(potential)-1 and j < len(raw)-1:
+                    # print i, j
+                    if potential[i] == raw[j]:
+                        i += 1
+                        j += 1
+                        continue
+                    # the characters don't match; check for duplication in raw
+                    while raw[j] == raw[j-1] and j < len(raw)-1:
+                        j += 1
+                    # if at this point there is still no match, the suggesion is invalid
+                    if potential[i] != raw[j]:
+                        return False
+                return True
+        
+            for potential in potentials:
+                if is_valid_spellcheck(user_input, potential):
+                    suggestion = potential
+                    break
+        return suggestion
+
     suggesion = give_suggestion(user_input)
     return suggesion
 
@@ -152,10 +167,11 @@ def continuous_loop():
         print spellcheck(user_input)
 
 def main():
-    continuous_loop()
+    # continuous_loop()
     # test_generated_misspellings()
-    # test_piped_input()
+    test_piped_input()
 
 if __name__ == "__main__":
     dictionary = seed_dict()
+    print dictionary
     main()
