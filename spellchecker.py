@@ -1,4 +1,3 @@
-# import sys # for piping capability
 from os.path import exists
 import re, sys
 vowel_pattern = re.compile('[aeiou]')
