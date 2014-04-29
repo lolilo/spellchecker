@@ -1,20 +1,20 @@
 from os.path import exists
-from sys import argv
+# from sys import argv
 import random
-seed_dictionary_path = '/usr/share/dict/words'
-# seed_dictionary_path = 'toydict.txt'
+# seed_dictionary_path = '/usr/share/dict/words'
+seed_dictionary_path = 'toydict.txt'
 vowels = ['a', 'e', 'i', 'o', 'u']
 
-script, output_file = argv
+# script, output_file = argv
 isValid = True
 if not exists(seed_dictionary_path):
     print "%r does not exist!" % seed_dictionary_path
     isValid = False
 
 if isValid:
-    print "Writing list of misspelled words to %s." % output_file
-    target = open(output_file, 'w')
-    target.truncate()
+    # print "Writing list of misspelled words to %s." % output_file
+    # target = open(output_file, 'w')
+    # target.truncate()
 
     def create_word_list():
         input_file = seed_dictionary_path
@@ -55,8 +55,8 @@ if isValid:
 
     for word in words:
         misspelled_word = generate_mistake(word)
-        target.write(misspelled_word + '\n')
-        # print misspelled_word
-    print 'Complete.'
-    target.close()
+        # target.write(misspelled_word + '\n')
+        print misspelled_word
+    # print 'Complete.'
+    # target.close()
 

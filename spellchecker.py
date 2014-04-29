@@ -1,9 +1,9 @@
 # import sys # for piping capability
 from os.path import exists
-import re
+import re, sys
 vowel_pattern = re.compile('[aeiou]')
-seed_dictionary_path = '/usr/share/dict/words'
-# seed_dictionary_path = 'toydict.txt'
+# seed_dictionary_path = '/usr/share/dict/words'
+seed_dictionary_path = 'toydict.txt'
 incorrect_words_path = 'misspelled_words.txt'
 
 def free_vowels(word):
@@ -116,6 +116,7 @@ def spellcheck(user_input):
     suggesion = give_suggestion(user_input)
     return suggesion
 
+# test from a .txt file of misspelled words
 def test_generated_misspellings():
     input_file = incorrect_words_path
     isValid = True
@@ -136,13 +137,21 @@ def test_generated_misspellings():
                 suggestion = spellcheck(word)
                 if suggestion == "NO SUGGESTION":
                     print "%s has no suggested correction." % word
-                    break
+                    return
+    print "All test cases passed."
+
+def test_piped_input():
+    lines = sys.stdin.read().split()
+    for word in lines:
+        suggestion = spellcheck(word)
+        if suggestion == "NO SUGGESTION":
+            print "%s has no suggested correction." % word
+            return
     print "All test cases passed."
 
 def continuous_loop():
     while True: 
         user_input = raw_input("> ").strip()
-        # user_input = sys.stdin.read()
         print spellcheck(user_input)
 
 def main():
@@ -151,5 +160,6 @@ def main():
 
 if __name__ == "__main__":
     dictionary = seed_dict()
-    continuous_loop()
+    # continuous_loop()
     # test_generated_misspellings()
+    test_piped_input()
