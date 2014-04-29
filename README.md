@@ -25,10 +25,10 @@ When spellchecking the input 'AchhHhhHhheiiiiIiAiNnNnNn', we [transform this inp
 
 Another example, conect should not produce a suggestion according to our rules. 
 
-  word is conect
-  key is  c_n_ct
-  key maps to value ['connect']
-  user_input with free vowels is  c_n_ct
-  potential word with free vowels is c_nn_ct
-  c_n_ct does not have the minimum number of 'n' characters, so the spellchecker produces NO SUGGESTION
+    word is conect
+    key is  c_n_ct
+    key maps to value ['connect']
+    user_input with free vowels is  c_n_ct
+    potential word with free vowels is c_nn_ct
+    c_n_ct does not have the minimum number of 'n' characters, so the spellchecker produces NO SUGGESTION
 
