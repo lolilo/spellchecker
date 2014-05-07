@@ -1,8 +1,8 @@
 from os.path import exists
 import re, sys
 VOWEL_PATTERN = re.compile('[aeiou]')
-# SEED_DICTIONARY_PATH = '/usr/share/dict/words'
-SEED_DICTIONARY_PATH = 'toydict.txt'
+SEED_DICTIONARY_PATH = '/usr/share/dict/words'
+# SEED_DICTIONARY_PATH = 'toydict.txt'
 INCORRECT_WORDS_PATH = 'misspelled_words.txt'
 
 # replace all vowels in word with wildcard character '_'
@@ -69,53 +69,46 @@ def seed_dict():
 
 # provide a correctly spelled word for user input
 def spellcheck(user_input):
-    if not user_input:
-        return
+    if dictionary.get(user_input): # correctly spelled word entered
+        return dictionary[user_input][0] # this will be a single element list
 
-    def give_suggestion(user_input):
-        if dictionary.get(user_input): # correctly spelled word entered
-            return dictionary[user_input][0] # this will be a single element list
-
-        key = create_key(user_input)
-        suggestion = "NO SUGGESTION"
-        # print ''
-        # print 'word is', user_input
-        # print 'key is ', key
-        if dictionary.get(key):
-            potentials = dictionary[key]
-            # print 'key maps to value', potentials
-            # 'conect' should NOT produce 'connect' as suggestion
-            def is_valid_spellcheck(raw, potential):
-                if len(raw) < len(potential):
+    key = create_key(user_input)
+    suggestion = "NO SUGGESTION"
+    # print ''
+    print 'word is', user_input
+    print 'key is ', key
+    if dictionary.get(key):
+        potentials = dictionary[key]
+        print 'key maps to value', potentials
+        # 'conect' should NOT produce 'connect' as suggestion
+        def is_valid_spellcheck(raw, potential):
+            if len(raw) < len(potential):
+                return False
+            raw = free_vowels(raw.lower())
+            potential = free_vowels(potential.lower())
+            # print 'user_input with free vowels is ', raw
+            # print 'potential word with free vowels is ', potential
+            i = 0
+            j = 0
+            while i < len(potential)-1 and j < len(raw)-1:
+                # print i, j
+                if potential[i] == raw[j]:
+                    i += 1
+                    j += 1
+                    continue
+                # the characters don't match; check for duplication in raw
+                while raw[j] == raw[j-1] and j < len(raw)-1:
+                    j += 1
+                # if at this point there is still no match, the suggesion is invalid
+                if potential[i] != raw[j]:
                     return False
-                raw = free_vowels(raw.lower())
-                potential = free_vowels(potential.lower())
-                # print 'user_input with free vowels is ', raw
-                # print 'potential word with free vowels is ', potential
-                i = 0
-                j = 0
-                while i < len(potential)-1 and j < len(raw)-1:
-                    # print i, j
-                    if potential[i] == raw[j]:
-                        i += 1
-                        j += 1
-                        continue
-                    # the characters don't match; check for duplication in raw
-                    while raw[j] == raw[j-1] and j < len(raw)-1:
-                        j += 1
-                    # if at this point there is still no match, the suggesion is invalid
-                    if potential[i] != raw[j]:
-                        return False
-                return True
-        
-            for potential in potentials:
-                if is_valid_spellcheck(user_input, potential):
-                    suggestion = potential
-                    break
-        return suggestion
-
-    suggesion = give_suggestion(user_input)
-    return suggesion
+            return True
+    
+        for potential in potentials:
+            if is_valid_spellcheck(user_input, potential):
+                suggestion = potential
+                break
+    return suggestion
 
 # test from a .txt file of misspelled words
 def test_generated_misspellings():
@@ -155,12 +148,14 @@ def test_piped_input():
 def continuous_loop():
     while True: 
         user_input = raw_input("> ").strip()
+        if not user_input:
+            continue
         print spellcheck(user_input)
 
 def main():
-    # continuous_loop()
+    continuous_loop()
     # test_generated_misspellings()
-    test_piped_input()
+    # test_piped_input()
 
 if __name__ == "__main__":
     dictionary = seed_dict()
