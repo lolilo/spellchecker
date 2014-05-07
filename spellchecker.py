@@ -88,15 +88,13 @@ def is_valid_spellcheck(raw, potential):
             # but there are remaining chars in potential to check
             if j == len(raw) and i < len(potential):
                 return False
-            continue
-
-        # the characters don't match; check for duplication in raw
-        while raw[j] == raw[j-1] and j < len(raw):
-            j += 1
-
-        # if at this point there is still no match, the suggesion is invalid
-        if potential[i] != raw[j]:
-            return False
+        else:
+            # the characters don't match; check for duplication in raw
+            while raw[j] == raw[j-1] and j < len(raw):
+                j += 1
+            # if at this point there is still no match, the suggesion is invalid
+            if potential[i] != raw[j]:
+                return False
     return True
 
 # provide a correctly spelled word for user input
@@ -106,12 +104,12 @@ def spellcheck(user_input):
 
     key = create_key(user_input)
     suggestion = "NO SUGGESTION"
-    print ''
-    print 'word is', user_input
-    print 'key is ', key
+    # print ''
+    # print 'word is', user_input
+    # print 'key is ', key
     if dictionary.get(key):
         potentials = dictionary[key]
-        print 'key maps to value', potentials
+        # print 'key maps to value', potentials
     
         for potential in potentials:
             if is_valid_spellcheck(user_input, potential):
