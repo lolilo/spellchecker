@@ -160,9 +160,9 @@ def continuous_loop():
         print spellcheck(user_input)
 
 def main():
-    # continuous_loop()
+    continuous_loop()
     # test_generated_misspellings()
-    test_piped_input()
+    # test_piped_input()
 
 if __name__ == "__main__":
     dictionary = seed_dict()
