@@ -71,7 +71,7 @@ def seed_dict():
 def is_valid_spellcheck(raw, potential):
     if len(raw) < len(potential):
         return False
-    raw = free_vowels(raw.lower()).strip()
+    raw = free_vowels(raw.lower())
     potential = free_vowels(potential.lower())
     # print 'potential word with free vowels is ', potential
     # print 'user_input with free vowels is ', raw
