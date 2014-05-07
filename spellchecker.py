@@ -67,6 +67,31 @@ def seed_dict():
 
         return dictionary
 
+# 'conect' should NOT produce 'connect' as suggestion
+# 'caat' should NOT produce 'Catt' as suggestion
+def is_valid_spellcheck(raw, potential):
+    if len(raw) < len(potential):
+        return False
+    raw = free_vowels(raw.lower())
+    potential = free_vowels(potential.lower())
+    # print 'user_input with free vowels is ', raw
+    # print 'potential word with free vowels is ', potential
+    i = 0
+    j = 0
+    while i < len(potential)-1 and j < len(raw)-1:
+        # print i, j
+        if potential[i] == raw[j]:
+            i += 1
+            j += 1
+            continue
+        # the characters don't match; check for duplication in raw
+        while raw[j] == raw[j-1] and j < len(raw)-1:
+            j += 1
+        # if at this point there is still no match, the suggesion is invalid
+        if potential[i] != raw[j]:
+            return False
+    return True
+
 # provide a correctly spelled word for user input
 def spellcheck(user_input):
     if dictionary.get(user_input): # correctly spelled word entered
@@ -80,29 +105,6 @@ def spellcheck(user_input):
     if dictionary.get(key):
         potentials = dictionary[key]
         print 'key maps to value', potentials
-        # 'conect' should NOT produce 'connect' as suggestion
-        def is_valid_spellcheck(raw, potential):
-            if len(raw) < len(potential):
-                return False
-            raw = free_vowels(raw.lower())
-            potential = free_vowels(potential.lower())
-            # print 'user_input with free vowels is ', raw
-            # print 'potential word with free vowels is ', potential
-            i = 0
-            j = 0
-            while i < len(potential)-1 and j < len(raw)-1:
-                # print i, j
-                if potential[i] == raw[j]:
-                    i += 1
-                    j += 1
-                    continue
-                # the characters don't match; check for duplication in raw
-                while raw[j] == raw[j-1] and j < len(raw)-1:
-                    j += 1
-                # if at this point there is still no match, the suggesion is invalid
-                if potential[i] != raw[j]:
-                    return False
-            return True
     
         for potential in potentials:
             if is_valid_spellcheck(user_input, potential):

@@ -15,5 +15,16 @@ class TestListOperations(unittest.TestCase):
         self.assertEqual(create_key(self.word2), '_ch_n')
         self.assertEqual(create_key(self.word3), 'h_py')
 
+# ['Catt', 'cat', 'coat', 'coot', 'cot', 'cut']
+
+# 'conect' should NOT produce 'connect' as suggestion
+# 'caat' should NOT produce 'Catt' as suggestion
+
+    def test_is_valid_spellcheck(self):
+        self.assertEqual(is_valid_spellcheck('conect', 'connect'), False) 
+        self.assertEqual(is_valid_spellcheck('AchhHhhHhheiiiiIiAiNnNnNn', 'Aachen'), False) 
+        self.assertEqual(is_valid_spellcheck('AchhHhhHhheiiiiIiAiNnNnNn', 'Achaean'), True)
+        self.assertEqual(is_valid_spellcheck('caaat', 'Catt'), False) 
+
 if __name__ == '__main__':
     unittest.main()
