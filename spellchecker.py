@@ -2,7 +2,7 @@ from os.path import exists
 import re, sys
 VOWEL_PATTERN = re.compile('[aeiou]')
 SEED_DICTIONARY_PATH = '/usr/share/dict/words'
-# SEED_DICTIONARY_PATH = 'toydict.txt'
+SEED_DICTIONARY_PATH = 'toydict.txt'
 INCORRECT_WORDS_PATH = 'misspelled_words.txt'
 
 # replace all vowels in word with wildcard character '_'
@@ -72,14 +72,14 @@ def seed_dict():
 def is_valid_spellcheck(raw, potential):
     if len(raw) < len(potential):
         return False
-    raw = free_vowels(raw.lower())
+    raw = free_vowels(raw.lower()).strip()
     potential = free_vowels(potential.lower())
-    # print 'user_input with free vowels is ', raw
-    # print 'potential word with free vowels is ', potential
+    print 'user_input with free vowels is ', raw
+    print 'potential word with free vowels is ', potential
     i = 0
     j = 0
     while i < len(potential)-1 and j < len(raw)-1:
-        # print i, j
+        print i, j
         if potential[i] == raw[j]:
             i += 1
             j += 1
@@ -99,7 +99,7 @@ def spellcheck(user_input):
 
     key = create_key(user_input)
     suggestion = "NO SUGGESTION"
-    # print ''
+    print ''
     print 'word is', user_input
     print 'key is ', key
     if dictionary.get(key):
