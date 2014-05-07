@@ -28,8 +28,8 @@ class TestListOperations(unittest.TestCase):
         self.assertEqual(is_valid_spellcheck('   jjoobbb', 'job'), True)
         self.assertEqual(is_valid_spellcheck('AchhHhhHhheiiiiIiAiNnNnNn', 'Aachen'), False) 
         self.assertEqual(is_valid_spellcheck('AchhHhhHhheiiiiIiAiNnNnNn', 'Achaean'), True)
-        # self.assertEqual(is_valid_spellcheck('caaat', 'Catt'), False) 
-        # self.assertEqual(is_valid_spellcheck('caaat', 'cat'), True) 
+        self.assertEqual(is_valid_spellcheck('caaat', 'Catt'), False) 
+        self.assertEqual(is_valid_spellcheck('caaat', 'cat'), True) 
 
 if __name__ == '__main__':
     unittest.main()

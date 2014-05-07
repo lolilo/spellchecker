@@ -68,25 +68,32 @@ def seed_dict():
         return dictionary
 
 # 'conect' should NOT produce 'connect' as suggestion
-# 'caat' should NOT produce 'Catt' as suggestion
 def is_valid_spellcheck(raw, potential):
     if len(raw) < len(potential):
         return False
     raw = free_vowels(raw.lower()).strip()
     potential = free_vowels(potential.lower())
-    print 'user_input with free vowels is ', raw
-    print 'potential word with free vowels is ', potential
-    i = 0
-    j = 0
-    while i < len(potential)-1 and j < len(raw)-1:
-        print i, j
+    # print 'potential word with free vowels is ', potential
+    # print 'user_input with free vowels is ', raw
+    i = 0 # potential word index
+    j = 0 # raw word index
+
+    while j < len(raw) and i < len(potential):
+        # print i, j
         if potential[i] == raw[j]:
             i += 1
             j += 1
+            # 'caat' should NOT produce 'Catt' as suggestion
+            # we've reached the end of raw, 
+            # but there are remaining chars in potential to check
+            if j == len(raw) and i < len(potential):
+                return False
             continue
+
         # the characters don't match; check for duplication in raw
-        while raw[j] == raw[j-1] and j < len(raw)-1:
+        while raw[j] == raw[j-1] and j < len(raw):
             j += 1
+
         # if at this point there is still no match, the suggesion is invalid
         if potential[i] != raw[j]:
             return False
