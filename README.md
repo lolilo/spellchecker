@@ -19,7 +19,7 @@ Keys
 
 To account for user input that is already spelled correctly, we also populate the dictionary with [correctly spelled words as both key and value in their respective key-value pairs](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L66).
 
-When spellchecking the input 'AchhHhhHhheiiiiIiAiNnNnNn', we [transform this input](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L79) into the key '_ch_n' with the same functions used in populating our dictionary. The key '_ch_n' maps to ['Aachen', 'Achaean']. However, according to our rules, 'Aachen' will be a false match for 'AchhHhhHhheiiiiIiAiNnNnNn'. We must [check the validity of the returned value against the raw user input](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L88) before displaying the suggestion to the user. We loop through the list of potential suggestions and return a suggestion that passes our validity check. If we exhaust the list (or if the key created from the user's input does not map to any values), we return ["NO SUGGESTION"](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L108). 
+When spellchecking the input 'AchhHhhHhheiiiiIiAiNnNnNn', we [transform this input](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L79) into the key '_ch_n' with the same functions used in populating our dictionary. The key '_ch_n' maps to ['Aachen', 'Achaean']. However, according to our rules, 'Aachen' will be a false match for 'AchhHhhHhheiiiiIiAiNnNnNn'. We must [check the validity of the returned value against the raw user input](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L71) before displaying the suggestion to the user. We iternate through the list of potential suggestions and return a suggestion that passes our validity check. If we exhaust the list (or if the key created from the user's input does not map to any values), we return ["NO SUGGESTION"](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L106). 
 
     word is achhhhhhhheiiiiiiainnnnnn
     key is  _ch_n
@@ -43,7 +43,7 @@ In the event that we reach the end of the raw word, but there are still remainin
 
 Test Cases
 ------------------
-incorrect_word_generator.py produces misspellings of words in our dictionary in order for us to test the integrity of spellchecker.py. We can pipe the output from the word generator to the spellchecker program with the correct [main function](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L163) selected in spellchecker.py.
+incorrect_word_generator.py produces misspellings of words in our dictionary in order for us to test the integrity of spellchecker.py. We can pipe the output from the word generator to the spellchecker program with the correct [main function](https://github.com/lolilo/spellchecker/blob/master/spellchecker.py#L162) selected in spellchecker.py.
     
     $ python incorrect_word_generator.py | python spellchecker.py
 
